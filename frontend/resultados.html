@@ -1,0 +1,49 @@
+<!-- frontend/resultados.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resultados</title>
+</head>
+<body>
+  <h1>Datos de inicio de sesión almacenados</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Usuario</th>
+        <th>Contraseña (Texto Plano)</th>
+        <th>bcryptjs</th>
+        <th>md5</th>
+        <th>sha1</th>
+        <th>sha256</th>
+        <th>SHA3_256</th>
+      </tr>
+    </thead>
+    <tbody id="dataBody">
+    </tbody>
+  </table>
+
+  <script>
+    fetch('/resultados')
+      .then(response => response.json())
+      .then(data => {
+        const dataBody = document.getElementById('dataBody');
+        data.forEach(entry => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${entry.usuario}</td>
+            <td>${entry.contraseña}</td>
+            <td>${entry.bcryptjs}</td>
+            <td>${entry.md5}</td>
+            <td>${entry.sha1}</td>
+            <td>${entry.sha256}</td>
+            <td>${entry.SHA3_256}</td>
+          `;
+          dataBody.appendChild(row);
+        });
+      })
+      .catch(error => console.error('Error:', error));
+  </script>
+</body>
+</html>
